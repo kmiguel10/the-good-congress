@@ -25,3 +25,27 @@ interface CongressResponse {
   congress: Congress;
   request: Request;
 }
+
+// From getting current members
+type Term = {
+  chamber: string;
+  startYear: number;
+  endYear?: number;
+};
+
+type Depiction = {
+  attribution: string;
+  imageUrl: string;
+};
+
+type Member = {
+  bioguideId: string;
+  depiction: Depiction;
+  district?: number;
+  name: string;
+  partyName: string;
+  state: string;
+  terms: Term[];
+  updateDate: string;
+  url: string;
+};

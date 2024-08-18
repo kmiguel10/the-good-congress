@@ -9,7 +9,7 @@ export default function Home() {
     const fetchCurrentCongress = async () => {
       try {
         const response = await fetch("/api/opengov/congress/current");
-        const data = await response.json();
+        const data: CongressResponse = await response.json();
         console.log("Current congress: ", data);
       } catch (error) {
         console.error("Error fetching current congress: ", error);

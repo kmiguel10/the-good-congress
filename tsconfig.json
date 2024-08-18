@@ -19,8 +19,15 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots": ["./types", "./node_modules/@types"] // Add this line to include the types directory
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "types/**/*.d.ts" // Add this line to include all .d.ts files in the types directory
+  ],
   "exclude": ["node_modules"]
 }

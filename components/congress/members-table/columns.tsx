@@ -9,7 +9,7 @@ export type Member = {
   chamber: string;
   party: string;
   state: string;
-  district: number;
+  district: number | null;
 };
 
 export const columns: ColumnDef<Member>[] = [

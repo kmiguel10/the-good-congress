@@ -41,7 +41,7 @@ interface Depiction {
 interface Member {
   bioguideId: string;
   depiction: Depiction;
-  district: number;
+  district?: number;
   name: string;
   partyName: string;
   state: string;
@@ -60,4 +60,13 @@ interface cardProps {
   body: string | null;
   subBody: string;
   tooltipContent?: string | null;
+}
+
+//Shape of members table data
+interface CongressMemberTable {
+  name: string;
+  chamber: string;
+  party: string;
+  state: string;
+  district: number | null;
 }

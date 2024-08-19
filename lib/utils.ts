@@ -4,6 +4,8 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+//TODO: this is not needed anymore... so deletelater
 export function getHouseOfRepresentatives(members: Member[]): Member[] {
   return members.filter((member) => {
     // Check if the terms object exists and has an item array with elements
@@ -27,4 +29,28 @@ export function getHouseOfRepresentatives(members: Member[]): Member[] {
     }
     return false; // If no terms or chamber, assume not in the House
   });
+}
+
+//Filter members to turn into the data table members shape
+export function getCongressTableMembers(members: Member[]) {
+  let congressMembers: CongressMemberTable[] = [];
+
+  members.map((member) => {
+    const lastTermIndex = member.terms.item.length - 1;
+    const lastTerm =
+      member.terms.item[lastTermIndex].chamber === "Senate"
+        ? "Senate"
+        : "House";
+    let _member: CongressMemberTable = {
+      name: member.name,
+      chamber: lastTerm,
+      party: member.partyName,
+      state: member.state,
+      district: member.district ? member.district : null,
+    };
+
+    congressMembers.push(_member);
+  });
+
+  return congressMembers;
 }

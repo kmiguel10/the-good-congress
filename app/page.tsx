@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <div className="container relative">
       <section className="md:block">
-        <div className="overflow-hidden rounded-lg border shadow space-y-4 bg-muted/40">
+        <div className="overflow-hidden rounded-lg border bg-background shadow space-y-4">
           <CongressDashboard members={cachedMembers} />
         </div>
       </section>

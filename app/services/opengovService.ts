@@ -12,6 +12,11 @@ export const getMembersByCurrentCongress = async (congress: string) => {
   return await fetchDataForCurrentMembers(`/member/congress/${congress}`);
 };
 
+//Returns detailed information for a specified congressional member
+export const getMemberInfo = async (bioguideId: string) => {
+  return await fetchData(`/member/${bioguideId}`);
+};
+
 const fetchData = async (endpoint: string) => {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}`);

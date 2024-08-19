@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    console.log("TEST");
     const data = await getCurrentCongress();
     return NextResponse.json(data);
   } catch (error: any) {

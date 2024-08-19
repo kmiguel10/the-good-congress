@@ -1,8 +1,8 @@
-import { Member, columns } from "./columns";
+import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 interface Props {
-  members: Member[];
+  members: CongressMemberTable[];
 }
 
 export default function CongressTable({ members }: Props) {

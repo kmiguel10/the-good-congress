@@ -42,6 +42,7 @@ export function getCongressTableMembers(members: Member[]) {
         ? "Senate"
         : "House";
     let _member: CongressMemberTable = {
+      bioguideId: member.bioguideId,
       name: member.name,
       chamber: lastTerm,
       party: member.partyName,

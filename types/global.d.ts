@@ -64,6 +64,7 @@ interface cardProps {
 
 //Shape of members table data
 interface CongressMemberTable {
+  bioguideId: string;
   name: string;
   chamber: string;
   party: string;

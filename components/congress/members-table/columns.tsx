@@ -1,21 +1,20 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Member = {
-  name: string;
-  chamber: string;
-  party: string;
-  state: string;
-  district: number | null;
-};
-
-export const columns: ColumnDef<Member>[] = [
+export const columns: ColumnDef<CongressMemberTable>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell: ({ row }) => (
+      <Link
+        className="underline decoration-sky-600 hover:text-purple-600"
+        href={`/members/${row.original.bioguideId}`}
+      >
+        {row.original.name}
+      </Link>
+    ),
   },
   {
     accessorKey: "chamber",

@@ -27,25 +27,37 @@ interface CongressResponse {
 }
 
 // From getting current members
-type Term = {
+interface Term {
   chamber: string;
   startYear: number;
-  endYear?: number;
-};
+  // Add other properties as needed
+}
 
-type Depiction = {
+interface Depiction {
   attribution: string;
   imageUrl: string;
-};
+}
 
-type Member = {
+interface Member {
   bioguideId: string;
   depiction: Depiction;
-  district?: number;
+  district: number;
   name: string;
   partyName: string;
   state: string;
-  terms: Term[];
+  terms: {
+    item: Term[];
+  };
   updateDate: string;
   url: string;
-};
+}
+
+/**
+ * Prop interface for CardDashboard
+ */
+interface cardProps {
+  title: string;
+  body: string | null;
+  subBody: string;
+  tooltipContent?: string | null;
+}

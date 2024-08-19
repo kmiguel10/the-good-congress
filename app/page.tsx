@@ -1,12 +1,15 @@
 "use client";
 
 import { CongressDashboard } from "@/components/congress/congress-dashboard";
+import CardDashboard from "@/components/global/card-dashboard";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const [currentCongress, setCurrentCongress] = useState("");
   const [members, setMembers] = useState<Member[]>();
+
+  //Fetch the current congress i.e. 118th congress
   useEffect(() => {
     const fetchCurrentCongress = async () => {
       try {
@@ -24,6 +27,7 @@ export default function Home() {
     fetchCurrentCongress();
   }, []);
 
+  //Fetch the current members of this congress
   useEffect(() => {
     const fetchCurrentMembers = async () => {
       try {
@@ -43,10 +47,16 @@ export default function Home() {
     }
   }, [currentCongress]);
 
+  //use useMemo to cache membersData
+  const cachedMembers = useMemo(() => members, [members]);
+
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <CongressDashboard />
-      <div>{JSON.stringify(members)}</div>
+    <div className="container relative">
+      <section className="md:block">
+        <div className="overflow-hidden rounded-lg border shadow space-y-4 bg-muted/40">
+          <CongressDashboard members={cachedMembers} />
+        </div>
+      </section>
     </div>
   );
 }

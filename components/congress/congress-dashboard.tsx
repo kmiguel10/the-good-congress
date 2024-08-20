@@ -1,10 +1,7 @@
-import {
-  getCongressTableMembers,
-  getHouseOfRepresentatives,
-} from "@/lib/utils";
+import { getCongressTableMembers } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import CongressTable from "./members-table/page";
-import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 
 interface Props {
   members: Member[] | undefined;

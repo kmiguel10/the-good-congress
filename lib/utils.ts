@@ -55,3 +55,45 @@ export function getCongressTableMembers(members: Member[]) {
 
   return congressMembers;
 }
+
+//Returns the candidate id of a given member
+export async function geCIDFromOpenSecrets(memberInfo: MemberInfo) {
+  let stateCode = getStateCodeFromMemberInfo(memberInfo);
+  let memberName = memberInfo.lastName;
+
+  if (!stateCode) {
+    console.error("State code is not available");
+    return null; // or throw an error if you want to handle it differently
+  }
+
+  try {
+    const response = await fetch(`/api/opensecrets/member/${stateCode}`);
+    const data: LegislatorsObject = await response.json();
+    //filter out member
+    let cid = getMemberCID(memberName, data.response.legislator);
+
+    return cid;
+  } catch (error) {
+    console.error("Error fetching current members in opensecret: ", error);
+  }
+}
+
+//Helper to get the stateCode from membersInfo
+function getStateCodeFromMemberInfo(memberInfo: MemberInfo) {
+  if (!memberInfo || !memberInfo.terms || memberInfo.terms.length === 0) {
+    // Return null or a default value if memberInfo or terms are undefined or empty
+    return null;
+  }
+  let lastTerm = memberInfo.terms.length - 1;
+  let currentTerm = memberInfo.terms[lastTerm];
+  return currentTerm.stateCode;
+}
+
+//Returns the current member's CID
+function getMemberCID(memberName: string, memberList: Legislator[]) {
+  let member: Legislator[] = memberList.filter(
+    (member) => member["@attributes"].lastname === memberName
+  );
+  console.log("MEMBER", member[0]);
+  return member[0]["@attributes"].cid;
+}

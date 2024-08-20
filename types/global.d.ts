@@ -77,7 +77,26 @@ interface CongressMemberTable {
  * which is member information
  */
 
-interface Legislation {
+interface Term {
+  chamber: string;
+  congress: number;
+  district?: number; // Optional, as it is not present for Senate terms
+  endYear?: number; // Optional, as it is not present for the current term
+  memberType: string;
+  startYear: number;
+  stateCode: string;
+  stateName: string;
+}
+
+interface AddressInformation {
+  city: string;
+  district: string;
+  officeAddress: string;
+  phoneNumber: string;
+  zipCode: number;
+}
+
+interface CosponsoredLegislation {
   count: number;
   url: string;
 }
@@ -90,6 +109,7 @@ interface Depiction {
 interface Leadership {
   congress: number;
   type: string;
+  current?: boolean; // Optional, as it only appears in one instance
 }
 
 interface PartyHistory {
@@ -98,31 +118,78 @@ interface PartyHistory {
   startYear: number;
 }
 
-interface Term {
-  chamber: string;
-  congress: number;
-  endYear: number;
-  memberType: string;
-  startYear: number;
-  stateCode: string;
-  stateName: string;
+interface SponsoredLegislation {
+  count: number;
+  url: string;
 }
 
 interface MemberInfo {
+  addressInformation: AddressInformation;
   bioguideId: string;
   birthYear: string;
-  cosponsoredLegislation: Legislation;
+  cosponsoredLegislation: CosponsoredLegislation;
   currentMember: boolean;
   depiction: Depiction;
   directOrderName: string;
   firstName: string;
-  honorificName: string;
+  honorificName?: string; // Optional, as it might not be present in all cases
   invertedOrderName: string;
   lastName: string;
   leadership: Leadership[];
+  middleName?: string; // Optional, as it might not be present in all cases
+  nickName?: string; // Optional, as it might not be present in all cases
+  officialWebsiteUrl: string;
   partyHistory: PartyHistory[];
-  sponsoredLegislation: Legislation;
+  sponsoredLegislation: SponsoredLegislation;
   state: string;
   terms: Term[];
   updateDate: string;
+}
+
+interface Request {
+  bioguideId: string;
+  contentType: string;
+  format: string;
+}
+
+interface MemberInfoRoot {
+  member: MemberIndividual;
+  request: Request;
+}
+
+// Object return for getLegislator from opensecrets
+interface LegislatorAttributes {
+  cid: string;
+  firstlast: string;
+  lastname: string;
+  party: string;
+  office: string;
+  gender: string;
+  first_elected: string;
+  exit_code: string;
+  comments: string;
+  phone: string;
+  fax: string;
+  website: string;
+  webform: string;
+  congress_office: string;
+  bioguide_id: string;
+  votesmart_id: string;
+  feccandid: string;
+  twitter_id: string;
+  youtube_url: string;
+  facebook_id: string;
+  birthdate: string;
+}
+
+interface Legislator {
+  "@attributes": LegislatorAttributes;
+}
+
+interface Response {
+  legislator: Legislator[];
+}
+
+interface LegislatorsObject {
+  response: Response;
 }

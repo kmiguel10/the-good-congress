@@ -6,10 +6,18 @@ const BASE_URL = "http://www.opensecrets.org/api/?";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPEN_SECRETS_API_KEY;
 
+const currentYear = new Date().getFullYear();
+
+//Returns top contributors to specified candidate for a House or Senate seat or member of Congress. These are 6-year numbers for senators/Senate candidates; 2-year numbers for representatives/House candidates.
+
+export const candContrib = async (cid: string) => {
+  return await fetchData(
+    `method=candContrib&output=json&cid=${cid}&cycle=${currentYear}`
+  );
+};
+
 //Provides summary fundraising information for specified politician
 export const candSummary = async (cid: string) => {
-  const currentYear = new Date().getFullYear();
-
   return await fetchData(
     `method=candSummary&output=json&cid=${cid}&cycle=${currentYear}`
   );

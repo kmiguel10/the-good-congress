@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { geCIDFromOpenSecrets } from "@/lib/utils";
 import { candSummary } from "@/app/services/opensecretsService";
+import Image from "next/image";
 
 const Page = () => {
   const { bioguideId } = useParams(); // Extract bioguideId from the URL
   const [memberInfo, setMemberInfo] = useState<MemberInfo>();
   const [openSecretsCID, setOpenSecretsCID] = useState("");
   const [candSummary, setCandSummary] = useState<SummaryAttributes>();
+  const [candContributions, setCandContributions] = useState<Contributors>();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
@@ -63,10 +65,53 @@ const Page = () => {
     if (openSecretsCID) fetchCandidateSummary();
   }, [openSecretsCID]);
 
+  useEffect(() => {
+    const fetchCandidateContributions = async () => {
+      try {
+        let response = await fetch(
+          `/api/opensecrets/candidates/contributors/${openSecretsCID}`
+        );
+        let data: CandContribObject = await response.json();
+        console.log("contributions", data);
+        if (data) setCandContributions(data.response);
+      } catch (error) {
+        console.error("Error fetching current members: ", error);
+      }
+    };
+    if (openSecretsCID) fetchCandidateContributions();
+  }, [openSecretsCID]);
+
   return (
     <>
       <div>Legislators Dashboard: {}</div>
+      {/* {
+        <div>
+          {memberInfo?.depiction.imageUrl ? (
+            <Image
+              src={memberInfo?.depiction?.imageUrl || "/default-image.jpg"}
+              width={500}
+              height={500}
+              alt="Picture of the author"
+            />
+          ) : (
+            <p>No image available</p>
+          )}
+        </div>
+      } */}
+      <div>
+        {memberInfo?.depiction.imageUrl && (
+          <img
+            src={memberInfo?.depiction?.imageUrl || "/default-image.jpg"}
+            alt="Picture of the author"
+            width={150}
+            height={150}
+          />
+        )}
+      </div>
+
+      <div>{JSON.stringify(memberInfo)}</div>
       <div>{JSON.stringify(candSummary)}</div>
+      <div>{JSON.stringify(candContributions)}</div>
     </>
   );
 };

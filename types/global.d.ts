@@ -224,3 +224,37 @@ interface CandSummaryResponse {
 interface CandSummaryObject {
   response: CandSummaryResponse;
 }
+
+//Object for candContrib api call
+interface ContributorAttributes {
+  org_name: string;
+  total: string;
+  pacs: string;
+  indivs: string;
+}
+
+interface Contributor {
+  "@attributes": ContributorAttributes;
+}
+
+interface ContributorsAttributes {
+  cand_name: string;
+  cid: string;
+  cycle: string;
+  origin: string;
+  source: string;
+  notice: string;
+}
+
+interface Contributors {
+  "@attributes": ContributorsAttributes;
+  contributor: Contributor[];
+}
+
+interface CandContribResponse {
+  contributors: Contributors;
+}
+
+interface CandContribObject {
+  response: CandidateContributionResponse;
+}

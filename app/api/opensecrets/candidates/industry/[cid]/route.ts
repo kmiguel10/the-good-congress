@@ -1,4 +1,4 @@
-import { candContrib } from "@/app/services/opensecretsService";
+import { candContrib, candIndustry } from "@/app/services/opensecretsService";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { cid: string } }
 ) {
   try {
-    const data = await candContrib(params.cid);
+    const data = await candIndustry(params.cid);
     return NextResponse.json(data);
   } catch (error: any) {
     console.error("Error in GET function:", error);

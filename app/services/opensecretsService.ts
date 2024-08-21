@@ -8,8 +8,14 @@ const API_KEY = process.env.NEXT_PUBLIC_OPEN_SECRETS_API_KEY;
 
 const currentYear = new Date().getFullYear();
 
-//Returns top contributors to specified candidate for a House or Senate seat or member of Congress. These are 6-year numbers for senators/Senate candidates; 2-year numbers for representatives/House candidates.
+//Provides the top ten industries contributing to a specified candidate for a House or Senate seat or member of Congress. These are 6-year numbers for Senators/Senate candidates; 2-year total for Representatives/House candidates.
+export const candIndustry = async (cid: string) => {
+  return await fetchData(
+    `method=candIndustry&output=json&cid=${cid}&cycle=${currentYear}`
+  );
+};
 
+//Returns top contributors to specified candidate for a House or Senate seat or member of Congress. These are 6-year numbers for senators/Senate candidates; 2-year numbers for representatives/House candidates.
 export const candContrib = async (cid: string) => {
   return await fetchData(
     `method=candContrib&output=json&cid=${cid}&cycle=${currentYear}`

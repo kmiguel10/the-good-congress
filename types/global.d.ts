@@ -258,3 +258,38 @@ interface CandContribResponse {
 interface CandContribObject {
   response: CandidateContributionResponse;
 }
+
+//object for candIndustries API call
+interface IndustryAttributes {
+  industry_code: string;
+  industry_name: string;
+  indivs: string;
+  pacs: string;
+  total: string;
+}
+
+interface Industry {
+  "@attributes": IndustryAttributes;
+}
+
+interface IndustriesAttributes {
+  cand_name: string;
+  cid: string;
+  cycle: string;
+  origin: string;
+  source: string;
+  last_updated: string;
+}
+
+interface Industries {
+  "@attributes": IndustriesAttributes;
+  industry: Industry[];
+}
+
+interface CandIndustriesResponse {
+  industries: Industries;
+}
+
+interface CandIndustriesObject {
+  response: CandIndustriesResponse;
+}

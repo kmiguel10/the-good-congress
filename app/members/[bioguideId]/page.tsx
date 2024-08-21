@@ -12,6 +12,7 @@ const Page = () => {
   const [openSecretsCID, setOpenSecretsCID] = useState("");
   const [candSummary, setCandSummary] = useState<SummaryAttributes>();
   const [candContributions, setCandContributions] = useState<Contributors>();
+  const [candIndustries, setCandIndustries] = useState<Industries>();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
@@ -65,6 +66,7 @@ const Page = () => {
     if (openSecretsCID) fetchCandidateSummary();
   }, [openSecretsCID]);
 
+  //Fetch candidate contributions by individuals
   useEffect(() => {
     const fetchCandidateContributions = async () => {
       try {
@@ -72,13 +74,30 @@ const Page = () => {
           `/api/opensecrets/candidates/contributors/${openSecretsCID}`
         );
         let data: CandContribObject = await response.json();
-        console.log("contributions", data);
+
         if (data) setCandContributions(data.response);
       } catch (error) {
         console.error("Error fetching current members: ", error);
       }
     };
     if (openSecretsCID) fetchCandidateContributions();
+  }, [openSecretsCID]);
+
+  //Fetch candidate contributions by industry
+  useEffect(() => {
+    const fetchIndustryContributions = async () => {
+      try {
+        let response = await fetch(
+          `/api/opensecrets/candidates/industry/${openSecretsCID}`
+        );
+        let data: CandContribObject = await response.json();
+        console.log("industry", data);
+        if (data) setCandIndustries(data.response);
+      } catch (error) {
+        console.error("Error fetching current members: ", error);
+      }
+    };
+    if (openSecretsCID) fetchIndustryContributions();
   }, [openSecretsCID]);
 
   return (
@@ -112,6 +131,7 @@ const Page = () => {
       <div>{JSON.stringify(memberInfo)}</div>
       <div>{JSON.stringify(candSummary)}</div>
       <div>{JSON.stringify(candContributions)}</div>
+      <div>{JSON.stringify(candIndustries)}</div>
     </>
   );
 };

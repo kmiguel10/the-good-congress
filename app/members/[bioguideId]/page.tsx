@@ -1,5 +1,6 @@
 "use client";
 
+import BillsTab from "@/components/member/bills-tab";
 import ProfileCard from "@/components/member/profile-card";
 import { geCIDFromOpenSecrets } from "@/lib/utils";
 import { useParams } from "next/navigation";
@@ -115,6 +116,9 @@ const Page = () => {
                 <div className="col-span-4">
                   <div className="col-span-2">
                     <ProfileCard memberInfo={memberInfo} />
+                  </div>
+                  <div>
+                    <BillsTab />
                   </div>
                 </div>
                 <div className="col-span-4"></div>

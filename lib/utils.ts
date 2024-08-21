@@ -35,6 +35,8 @@ export async function geCIDFromOpenSecrets(memberInfo: MemberInfo) {
   let stateCode = getStateCodeFromMemberInfo(memberInfo);
   let memberName = memberInfo.lastName;
 
+  console.log("Statecode", stateCode);
+
   if (!stateCode) {
     console.error("State code is not available");
     return null; // or throw an error if you want to handle it differently
@@ -43,8 +45,9 @@ export async function geCIDFromOpenSecrets(memberInfo: MemberInfo) {
   try {
     const response = await fetch(`/api/opensecrets/member/${stateCode}`);
     const data: LegislatorsObject = await response.json();
+    console.log("data: ", data);
     //filter out member
-    let cid = getMemberCID(memberName, data.response.legislator);
+    let cid = getMemberCID(memberName, data.response?.legislator);
 
     return cid;
   } catch (error) {
@@ -68,6 +71,8 @@ function getMemberCID(memberName: string, memberList: Legislator[]) {
   let member: Legislator[] = memberList.filter(
     (member) => member["@attributes"].lastname === memberName
   );
-  console.log("MEMBER", member[0]);
-  return member[0]["@attributes"].cid;
+
+  let cid = member[0]["@attributes"].cid;
+
+  return cid;
 }

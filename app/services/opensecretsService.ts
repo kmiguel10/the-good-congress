@@ -6,6 +6,15 @@ const BASE_URL = "http://www.opensecrets.org/api/?";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPEN_SECRETS_API_KEY;
 
+//Provides summary fundraising information for specified politician
+export const candSummary = async (cid: string) => {
+  const currentYear = new Date().getFullYear();
+
+  return await fetchData(
+    `method=candSummary&output=json&cid=${cid}&cycle=${currentYear}`
+  );
+};
+
 //Returns current members by state
 export const getLegislators = async (stateCode: string) => {
   return await fetchData(`method=getLegislators&output=json&id=${stateCode}`);

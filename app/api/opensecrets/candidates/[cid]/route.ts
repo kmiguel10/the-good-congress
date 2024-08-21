@@ -1,14 +1,12 @@
-import { getLegislators } from "@/app/services/opensecretsService";
+import { candSummary } from "@/app/services/opensecretsService";
 import { NextResponse } from "next/server";
 
-//This will be called in the utils geCID function
 export async function GET(
   request: Request,
-  { params }: { params: { stateCode: string } }
+  { params }: { params: { cid: string } }
 ) {
   try {
-    const _stateCode = params.stateCode;
-    const data = await getLegislators(_stateCode);
+    const data = await candSummary(params.cid);
     return NextResponse.json(data);
   } catch (error: any) {
     console.error("Error in GET function:", error);

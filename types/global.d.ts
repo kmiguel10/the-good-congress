@@ -193,3 +193,34 @@ interface Response {
 interface LegislatorsObject {
   response: Response;
 }
+
+//Response object from candSummary
+interface SummaryAttributes {
+  cand_name: string;
+  cid: string;
+  cycle: string;
+  state: string;
+  party: string;
+  chamber: string;
+  first_elected: string;
+  next_election: string;
+  total: string;
+  spent: string;
+  cash_on_hand: string;
+  debt: string;
+  origin: string;
+  source: string;
+  last_updated: string;
+}
+
+interface Summary {
+  "@attributes": SummaryAttributes;
+}
+
+interface CandSummaryResponse {
+  summary: Summary;
+}
+
+interface CandSummaryObject {
+  response: CandSummaryResponse;
+}

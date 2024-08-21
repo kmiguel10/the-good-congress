@@ -67,3 +67,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.circular-image {
+  border-radius: 50%; /* Make the image circular */
+  width: 100px; /* Set a fixed width */
+  height: 100px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the container without distortion */
+  object-position: center top; /* Move the image up */
+}

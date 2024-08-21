@@ -30,7 +30,15 @@ export const CongressDashboard: React.FC<Props> = ({ members }) => {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 "></div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
-        <Card className="col-span-5">
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Members</CardTitle>
+          </CardHeader>
+          <CardContent className="pl-2">
+            <CongressTable members={congressTableData} />
+          </CardContent>
+        </Card>
+        <Card className="col-span-4">
           <CardHeader>
             <CardTitle>Members</CardTitle>
           </CardHeader>

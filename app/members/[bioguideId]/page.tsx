@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import ProfileCard from "@/components/member/profile-card";
 import { geCIDFromOpenSecrets } from "@/lib/utils";
-import { candSummary } from "@/app/services/opensecretsService";
-import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Page = () => {
   const { bioguideId } = useParams(); // Extract bioguideId from the URL
@@ -103,35 +102,27 @@ const Page = () => {
   return (
     <>
       <div>Legislators Dashboard: {}</div>
-      {/* {
-        <div>
-          {memberInfo?.depiction.imageUrl ? (
-            <Image
-              src={memberInfo?.depiction?.imageUrl || "/default-image.jpg"}
-              width={500}
-              height={500}
-              alt="Picture of the author"
-            />
-          ) : (
-            <p>No image available</p>
-          )}
-        </div>
-      } */}
-      <div>
-        {memberInfo?.depiction.imageUrl && (
-          <img
-            src={memberInfo?.depiction?.imageUrl || "/default-image.jpg"}
-            alt="Picture of the author"
-            width={150}
-            height={150}
-          />
-        )}
-      </div>
-
-      <div>{JSON.stringify(memberInfo)}</div>
+      {/* <div>{JSON.stringify(memberInfo)}</div>
       <div>{JSON.stringify(candSummary)}</div>
       <div>{JSON.stringify(candContributions)}</div>
-      <div>{JSON.stringify(candIndustries)}</div>
+      <div>{JSON.stringify(candIndustries)}</div> */}
+
+      <div className="container relative">
+        <section className="md:block">
+          <div className="overflow-hidden rounded-lg border bg-background shadow space-y-4">
+            <div className="flex-1 space-y-4 p-8 pt-6">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
+                <div className="col-span-4">
+                  <div className="col-span-2">
+                    <ProfileCard memberInfo={memberInfo} />
+                  </div>
+                </div>
+                <div className="col-span-4"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </>
   );
 };

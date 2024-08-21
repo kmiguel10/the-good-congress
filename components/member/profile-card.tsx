@@ -7,13 +7,17 @@ interface Props {
 }
 
 const ProfileCard: React.FC<Props> = ({ memberInfo }) => {
-  const terms = memberInfo?.terms.length || 0;
+  const terms: number = memberInfo?.terms.length || 0;
+  const currentTerm = memberInfo?.terms[terms - 1];
+  const partyHistory = memberInfo?.partyHistory.length || 0;
+  const currentPartyHistory = memberInfo?.partyHistory[partyHistory - 1];
+
   return (
     <Card>
       {/* <CardHeader>
         <CardTitle>{memberInfo?.directOrderName}</CardTitle>
       </CardHeader> */}
-      <CardContent className="pl-2">
+      <CardContent className="pl-4">
         <div className="py-2">
           {memberInfo?.depiction.imageUrl && (
             <img
@@ -27,11 +31,16 @@ const ProfileCard: React.FC<Props> = ({ memberInfo }) => {
         </div>
         <div>
           <div className="text-md font-semibold">
-            {memberInfo?.terms[terms - 1].chamber}
+            {memberInfo?.directOrderName}
           </div>
-          <div className="text-md font-semibold">{memberInfo?.state}</div>
           <div className="text-md font-semibold">
-            {memberInfo?.terms[terms - 1].district}
+            {`${currentPartyHistory?.partyName}`}
+          </div>
+          <div className="text-md font-semibold">
+            {`${currentTerm?.chamber}`}
+          </div>
+          <div className="text-md font-semibold">
+            {`${memberInfo?.state} ${currentTerm?.district}`}
           </div>
         </div>
       </CardContent>

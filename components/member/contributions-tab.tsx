@@ -7,31 +7,56 @@ import OrgsTable from "./orgs-contributors-table.tsx/page";
 import IndustriesTable from "./industry-contributors-table.tsx/page";
 
 interface Props {
-  organizations: CandContribResponse | null;
-  industries: CandIndustriesResponse | null;
+  openSecretsCID: string;
 }
 
-const ContributionsTab: React.FC<Props> = ({ organizations, industries }) => {
+const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
   const [orgsData, setOrgsData] = useState<OrgsTableDataType[]>();
   const [indsData, setIndsData] = useState<IndustryTableDataType[]>();
 
+  //Fetch candidate contributions by individuals
   useEffect(() => {
-    if (organizations) {
-      let orgsContributions = getOrgsContributors(organizations);
+    const fetchCandidateContributions = async () => {
+      try {
+        let response = await fetch(
+          `/api/opensecrets/candidates/contributors/${openSecretsCID}`
+        );
+        let data: CandContribObject = await response.json();
+        console.log("contributions", data);
+        if (data) {
+          let orgsContributions = getOrgsContributors(data.response);
+          setOrgsData(orgsContributions);
+        }
+      } catch (error) {
+        console.error("Error fetching current members: ", error);
+      }
+    };
+    if (openSecretsCID) fetchCandidateContributions();
+  }, [openSecretsCID]);
 
-      setOrgsData(orgsContributions);
-    }
-  }, [organizations]);
-
+  //Fetch candidate contributions by industry
   useEffect(() => {
-    if (industries) {
-      let industriesContributions = getIndustriesContributors(industries);
+    const fetchIndustryContributions = async () => {
+      try {
+        let response = await fetch(
+          `/api/opensecrets/candidates/industry/${openSecretsCID}`
+        );
+        let data: CandContribObject = await response.json();
+        console.log("industry", data);
+        if (data) {
+          let industriesContributions = getIndustriesContributors(
+            data.response
+          );
 
-      setIndsData(industriesContributions);
-    }
-  }, [industries]);
+          setIndsData(industriesContributions);
+        }
+      } catch (error) {
+        console.error("Error fetching current members: ", error);
+      }
+    };
+    if (openSecretsCID) fetchIndustryContributions();
+  }, [openSecretsCID]);
 
-  useEffect(() => {}, [industries]);
   return (
     <Tabs defaultValue="organizations" className="space-y-4">
       <TabsList>
@@ -42,6 +67,7 @@ const ContributionsTab: React.FC<Props> = ({ organizations, industries }) => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <div className="text-md font-semibold px-2"></div>
         </div>
+
         {orgsData && <OrgsTable organizations={orgsData} />}
       </TabsContent>
       <TabsContent value="industries" className="space-y-4">

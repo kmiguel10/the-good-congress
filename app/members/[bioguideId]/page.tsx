@@ -1,10 +1,10 @@
 "use client";
 
-import CongressTable from "@/components/congress/members-table/page";
 import BillsTab from "@/components/member/bills-tab";
 import ContributionsTab from "@/components/member/contributions-tab";
+import FinancialSummary from "@/components/member/financial-summary";
 import ProfileCard from "@/components/member/profile-card";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { geCIDFromOpenSecrets } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,10 +14,6 @@ const Page = () => {
   const [memberInfo, setMemberInfo] = useState<MemberInfo>();
   const [openSecretsCID, setOpenSecretsCID] = useState("");
   const [candSummary, setCandSummary] = useState<SummaryAttributes>();
-  const [candContributions, setCandContributions] =
-    useState<CandContribResponse>();
-  const [candIndustries, setCandIndustries] =
-    useState<CandIndustriesResponse>();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
@@ -61,49 +57,16 @@ const Page = () => {
           `/api/opensecrets/candidates/${openSecretsCID}`
         );
         let data: CandSummaryObject = await response.json();
-
+        console.log(
+          "Open secrets summary: ",
+          data.response.summary["@attributes"]
+        );
         setCandSummary(data.response.summary["@attributes"]);
       } catch (error) {
         console.error("Error fetching current members: ", error);
       }
     };
     if (openSecretsCID) fetchCandidateSummary();
-  }, [openSecretsCID]);
-
-  //Fetch candidate contributions by individuals
-  useEffect(() => {
-    const fetchCandidateContributions = async () => {
-      try {
-        let response = await fetch(
-          `/api/opensecrets/candidates/contributors/${openSecretsCID}`
-        );
-        let data: CandContribObject = await response.json();
-        console.log("contributions", data);
-        if (data) {
-          setCandContributions(data.response);
-        }
-      } catch (error) {
-        console.error("Error fetching current members: ", error);
-      }
-    };
-    if (openSecretsCID) fetchCandidateContributions();
-  }, [openSecretsCID]);
-
-  //Fetch candidate contributions by industry
-  useEffect(() => {
-    const fetchIndustryContributions = async () => {
-      try {
-        let response = await fetch(
-          `/api/opensecrets/candidates/industry/${openSecretsCID}`
-        );
-        let data: CandContribObject = await response.json();
-        console.log("industry", data);
-        if (data) setCandIndustries(data.response);
-      } catch (error) {
-        console.error("Error fetching current members: ", error);
-      }
-    };
-    if (openSecretsCID) fetchIndustryContributions();
   }, [openSecretsCID]);
 
   return (
@@ -151,12 +114,15 @@ const Page = () => {
                         <CardTitle>Bills</CardTitle>
                       </CardHeader> */}
                     <CardContent className="pl-2">
-                      {candContributions && candIndustries && (
-                        <ContributionsTab
-                          organizations={candContributions}
-                          industries={candIndustries}
-                        />
-                      )}
+                      <FinancialSummary />
+                    </CardContent>
+                  </Card>
+                  <Card className="col-span-4 py-2">
+                    {/* <CardHeader>
+                        <CardTitle>Bills</CardTitle>
+                      </CardHeader> */}
+                    <CardContent className="pl-2">
+                      <ContributionsTab openSecretsCID={openSecretsCID} />
                     </CardContent>
                   </Card>
                 </div>

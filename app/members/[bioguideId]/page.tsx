@@ -16,7 +16,8 @@ const Page = () => {
   const [candSummary, setCandSummary] = useState<SummaryAttributes>();
   const [candContributions, setCandContributions] =
     useState<CandContribResponse>();
-  const [candIndustries, setCandIndustries] = useState<Industries>();
+  const [candIndustries, setCandIndustries] =
+    useState<CandIndustriesResponse>();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {

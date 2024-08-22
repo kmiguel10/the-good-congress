@@ -369,7 +369,7 @@ interface OrgsTableDataType {
 
 //Organization Table Data Type
 interface IndustryTableDataType {
-  orgName: string;
+  industry_name: string;
   indiv: string;
   pacs: string;
   total: string;

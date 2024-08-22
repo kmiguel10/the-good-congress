@@ -139,3 +139,29 @@ export function getOrgsContributors(
 
   return _orgs;
 }
+
+export function getIndustriesContributors(
+  industries: CandIndustriesResponse
+): IndustryTableDataType[] {
+  console.log("getIndustriesContributors - orgs object:", industries);
+
+  let _inds: IndustryTableDataType[] = [];
+
+  // Check if orgs.contributors.contributor exists and is an array
+  if (industries.industries && Array.isArray(industries.industries.industry)) {
+    industries.industries.industry.forEach((industry) => {
+      let indTableData: IndustryTableDataType = {
+        industry_name: industry["@attributes"].industry_name,
+        indiv: industry["@attributes"].indivs,
+        pacs: industry["@attributes"].pacs,
+        total: industry["@attributes"].total,
+      };
+
+      _inds.push(indTableData);
+    });
+  } else {
+    console.error("orgs.contributors.contributor is undefined or not an array");
+  }
+
+  return _inds;
+}

@@ -38,14 +38,6 @@ export const CongressDashboard: React.FC<Props> = ({ members }) => {
             <CongressTable members={congressTableData} />
           </CardContent>
         </Card>
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Members</CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <CongressTable members={congressTableData} />
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

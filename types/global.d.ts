@@ -293,3 +293,68 @@ interface CandIndustriesResponse {
 interface CandIndustriesObject {
   response: CandIndustriesResponse;
 }
+
+//Interface for sponsored and cosponsored legislation API calls
+interface LatestAction {
+  actionDate: string;
+  text: string;
+  actionTime?: string; // This field is optional, present in one structure only
+}
+
+interface PolicyArea {
+  name: string;
+}
+
+interface SponsoredLegislationBase {
+  congress: number;
+  introducedDate: string;
+  latestAction: LatestAction;
+  type: string | null;
+  url: string;
+}
+
+interface BillSponsoredLegislation extends SponsoredLegislationBase {
+  number: string;
+  policyArea: PolicyArea;
+  title: string;
+}
+
+interface AmendmentSponsoredLegislation extends SponsoredLegislationBase {
+  amendmentNumber: string;
+}
+
+type SponsoredLegislationDataType =
+  | BillSponsoredLegislation
+  | AmendmentSponsoredLegislation;
+
+interface Pagination {
+  count: number;
+  next: string | null;
+}
+
+interface Request {
+  bioguideId: string;
+  contentType: string;
+  format: string;
+}
+
+interface LegislationsResponse {
+  pagination: Pagination;
+  request: Request;
+  sponsoredLegislation: SponsoredLegislationDataType[];
+}
+
+interface ColegislationsResponse {
+  pagination: Pagination;
+  request: Request;
+  cosponsoredLegislation: SponsoredLegislationDataType[];
+}
+
+//Bills datatype for BillsTable
+interface BillDataType {
+  billNumber: number;
+  amendmentNumber: string;
+  title: string;
+  introducedDate: Date;
+  latestAction: string;
+}

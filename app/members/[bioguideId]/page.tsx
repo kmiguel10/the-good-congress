@@ -1,7 +1,9 @@
 "use client";
 
+import CongressTable from "@/components/congress/members-table/page";
 import BillsTab from "@/components/member/bills-tab";
 import ProfileCard from "@/components/member/profile-card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { geCIDFromOpenSecrets } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -114,11 +116,28 @@ const Page = () => {
             <div className="flex-1 space-y-4 p-8 pt-6">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
                 <div className="col-span-4">
-                  <div className="col-span-2">
+                  <div className="col-span-2 pb-2">
                     <ProfileCard memberInfo={memberInfo} />
                   </div>
                   <div>
-                    <BillsTab />
+                    <Card className="col-span-4 py-2">
+                      {/* <CardHeader>
+                        <CardTitle>Bills</CardTitle>
+                      </CardHeader> */}
+                      <CardContent className="pl-2">
+                        {memberInfo?.sponsoredLegislation &&
+                          memberInfo?.cosponsoredLegislation && (
+                            <BillsTab
+                              sponsoredLegislations={
+                                memberInfo?.sponsoredLegislation
+                              }
+                              cosponsoredLegislations={
+                                memberInfo?.cosponsoredLegislation
+                              }
+                            />
+                          )}
+                      </CardContent>
+                    </Card>
                   </div>
                 </div>
                 <div className="col-span-4"></div>

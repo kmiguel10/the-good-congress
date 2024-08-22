@@ -76,3 +76,41 @@ function getMemberCID(memberName: string, memberList: Legislator[]) {
 
   return cid;
 }
+
+//Returns sponsored and cosponsored bills in Bills shape
+export function getBills(bills: SponsoredLegislationDataType[] | undefined) {
+  if (!Array.isArray(bills)) {
+    console.log("Expected an array of bills but received:", bills);
+    return [];
+  }
+
+  let _bills: BillDataType[] = [];
+
+  console.log("Get bills: ", bills);
+
+  bills.map((bill) => {
+    let _bill: BillDataType = {
+      billNumber: "number" in bill ? parseInt(bill.number) : 0, // Default to 0 if not present
+      amendmentNumber: "amendmentNumber" in bill ? bill.amendmentNumber : "", // Default to empty string if not present
+      title: "title" in bill ? bill.title : "", // Default to empty string if not present
+      introducedDate: new Date(bill.introducedDate),
+      latestAction: bill.latestAction.text,
+    };
+    _bills.push(_bill);
+  });
+
+  return _bills;
+}
+
+export function formatDate(dateString: string): string {
+  // Create a Date object from the input string
+  const date = new Date(dateString);
+
+  // Extract month, day, and year
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const year = date.getFullYear().toString().slice(-2);
+
+  // Return the formatted date string
+  return `${month}/${day}/${year}`;
+}

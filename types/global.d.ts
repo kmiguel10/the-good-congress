@@ -358,3 +358,19 @@ interface BillDataType {
   introducedDate: Date;
   latestAction: string;
 }
+
+//Organization Table Data Type
+interface OrgsTableDataType {
+  orgName: string;
+  indiv: string;
+  pacs: string;
+  total: string;
+}
+
+//Organization Table Data Type
+interface IndustryTableDataType {
+  orgName: string;
+  indiv: string;
+  pacs: string;
+  total: string;
+}

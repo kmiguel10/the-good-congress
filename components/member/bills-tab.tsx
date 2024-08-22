@@ -3,7 +3,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getBills } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import BillsTable from "./bills-table/page";
-import { CongressDashboard } from "../congress/congress-dashboard";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -28,7 +27,7 @@ const BillsTab: React.FC<Props> = ({
           `${sponsoredLegislations?.url}?api_key=${apiKey}&limit=500&format=json`
         );
         const data: LegislationsResponse = await response.json();
-        console.log("sponsored: ", data);
+
         if (data) {
           let tableData = getBills(data.sponsoredLegislation);
           setSponsoredBills(tableData);
@@ -47,7 +46,6 @@ const BillsTab: React.FC<Props> = ({
           `${cosponsoredLegislations?.url}?api_key=${apiKey}&limit=500`
         );
         const data: ColegislationsResponse = await response.json();
-        console.log("co-sponsored: ", data.cosponsoredLegislation);
 
         if (data) {
           let tableData = getBills(data.cosponsoredLegislation);

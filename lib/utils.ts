@@ -86,8 +86,6 @@ export function getBills(bills: SponsoredLegislationDataType[] | undefined) {
 
   let _bills: BillDataType[] = [];
 
-  console.log("Get bills: ", bills);
-
   bills.map((bill) => {
     let _bill: BillDataType = {
       billNumber: "number" in bill ? parseInt(bill.number) : 0, // Default to 0 if not present
@@ -113,4 +111,31 @@ export function formatDate(dateString: string): string {
 
   // Return the formatted date string
   return `${month}/${day}/${year}`;
+}
+
+//Gets data for Contributors Table
+export function getOrgsContributors(
+  orgs: CandContribResponse
+): OrgsTableDataType[] {
+  console.log("getOrgsContributors - orgs object:", orgs);
+
+  let _orgs: OrgsTableDataType[] = [];
+
+  // Check if orgs.contributors.contributor exists and is an array
+  if (orgs.contributors && Array.isArray(orgs.contributors.contributor)) {
+    orgs.contributors.contributor.forEach((org) => {
+      let orgTableData: OrgsTableDataType = {
+        orgName: org["@attributes"].org_name,
+        indiv: org["@attributes"].indivs,
+        pacs: org["@attributes"].pacs,
+        total: org["@attributes"].total,
+      };
+
+      _orgs.push(orgTableData);
+    });
+  } else {
+    console.error("orgs.contributors.contributor is undefined or not an array");
+  }
+
+  return _orgs;
 }

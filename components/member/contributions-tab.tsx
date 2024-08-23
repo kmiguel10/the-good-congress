@@ -11,6 +11,7 @@ interface Props {
 const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
   const [orgsData, setOrgsData] = useState<OrgsTableDataType[]>();
   const [indsData, setIndsData] = useState<IndustryTableDataType[]>();
+  const [notice, setNotice] = useState("");
 
   //Fetch candidate contributions by individuals
   useEffect(() => {
@@ -24,6 +25,7 @@ const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
         if (data) {
           let orgsContributions = getOrgsContributors(data.response);
           setOrgsData(orgsContributions);
+          setNotice(data.response.contributors["@attributes"].notice);
         }
       } catch (error) {
         console.error("Error fetching current members: ", error);
@@ -62,16 +64,42 @@ const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
         <TabsTrigger value="industries">Industries</TabsTrigger>
       </TabsList>
       <TabsContent value="organizations" className="space-y-4">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <div className="text-md font-semibold px-2"></div>
+        <div>
+          <div className="text-md font-semibold p-2">
+            Top Contributors by Organization
+          </div>
+          <div className="flex justify-start px-2">
+            <div className="w-3/4 bg-yellow-300 rounded-md py-1">
+              <p className="text-xs font-light px-2 ">
+                * 6-year numbers for senators/Senate candidates
+              </p>
+              <p className="text-xs font-light px-2">
+                * 2-year numbers for representatives/House candidates
+              </p>
+            </div>
+          </div>
         </div>
-
         {orgsData && <OrgsTable organizations={orgsData} />}
       </TabsContent>
       <TabsContent value="industries" className="space-y-4">
         {/* <ScrollArea className="h-96 w-auto rounded-md border"></ScrollArea>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"></div>
         <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-8 "></div> */}
+        <div className="">
+          <div className="text-md font-semibold p-2">
+            Top Contributors by Industry
+          </div>
+          <div className="flex justify-start px-2">
+            <div className="w-3/4 bg-yellow-300 rounded-md py-1">
+              <p className="text-xs font-light px-2 ">
+                * 6-year numbers for senators/Senate candidates
+              </p>
+              <p className="text-xs font-light px-2">
+                * 2-year numbers for representatives/House candidates
+              </p>
+            </div>
+          </div>
+        </div>
         {indsData && <IndustriesTable industries={indsData} />}
       </TabsContent>
     </Tabs>

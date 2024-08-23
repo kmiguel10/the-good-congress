@@ -20,6 +20,7 @@ const Page = () => {
         const response = await fetch(`/api/opengov/member/${bioguideId}`);
         const data: MemberInfoRoot = await response.json();
 
+        console.log("Member summary: ", data);
         setMemberInfo(data.member);
       } catch (error) {
         console.error("Error fetching current members: ", error);
@@ -50,18 +51,13 @@ const Page = () => {
   return (
     <>
       <div>Legislators Dashboard: {}</div>
-      {/* <div>{JSON.stringify(memberInfo)}</div>
-      <div>{JSON.stringify(candSummary)}</div>
-      <div>{JSON.stringify(candContributions)}</div>
-      <div>{JSON.stringify(candIndustries)}</div> */}
-
       <div className="container relative">
         <section className="md:block">
           <div className="overflow-hidden rounded-lg border bg-background shadow space-y-4">
             <div className="flex-1 space-y-4 p-8 pt-6">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
                 <div className="col-span-4">
-                  <div className="col-span-2 p-2">
+                  <div className="col-span-2 pb-2">
                     <ProfileCard memberInfo={memberInfo} />
                   </div>
 

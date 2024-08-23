@@ -7,7 +7,7 @@ interface Props {
 
 export default function BillsTable({ bills }: Props) {
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-2">
       <DataTable columns={columns} data={bills} />
     </div>
   );

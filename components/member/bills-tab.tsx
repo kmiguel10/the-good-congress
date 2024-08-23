@@ -70,7 +70,7 @@ const BillsTab: React.FC<Props> = ({
           </div>
         </div>
         {sponsoredBills && (
-          <ScrollArea className="h-96 w-auto rounded-md border">
+          <ScrollArea className="h-96 w-auto rounded-md border-0">
             <BillsTable bills={sponsoredBills} />
           </ScrollArea>
         )}

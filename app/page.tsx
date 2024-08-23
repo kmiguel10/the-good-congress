@@ -1,8 +1,6 @@
 "use client";
 
 import { CongressDashboard } from "@/components/congress/congress-dashboard";
-import CardDashboard from "@/components/global/card-dashboard";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
@@ -17,7 +15,7 @@ export default function Home() {
         const data: CongressResponse = await response.json();
 
         let currentCongress = data.congress.number.toString();
-        console.log("Current congress: ", currentCongress);
+
         setCurrentCongress(currentCongress);
       } catch (error) {
         console.error("Error fetching current congress: ", error);
@@ -35,7 +33,7 @@ export default function Home() {
           `/api/opengov/member/congress/${currentCongress}`
         );
         const data: Member[] = await response.json();
-        console.log("Current members: ", data);
+
         setMembers(data);
       } catch (error) {
         console.error("Error fetching current members: ", error);

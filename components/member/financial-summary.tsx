@@ -124,7 +124,10 @@ export default function FinancialSummary({ openSecretsCID }: Props) {
     <Card>
       <CardHeader>
         <CardTitle>Financial Summary</CardTitle>
-        <CardDescription>{`Cycle: ${candSummary?.cycle}`}</CardDescription>
+        <CardDescription>
+          <div>{`Cycle: ${candSummary?.cycle}`}</div>
+          <div>{`Next Election: ${candSummary?.next_election}`}</div>
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

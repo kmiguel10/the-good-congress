@@ -9,7 +9,7 @@ interface Props {
 
 export default function OrgsTable({ organizations }: Props) {
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-2">
       <DataTable columns={columns} data={organizations} />
     </div>
   );

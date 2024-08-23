@@ -2,6 +2,7 @@
 
 import BillsTab from "@/components/member/bills-tab";
 import ContributionsTab from "@/components/member/contributions-tab";
+import { Component } from "@/components/member/demo";
 import FinancialSummary from "@/components/member/financial-summary";
 import ProfileCard from "@/components/member/profile-card";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,7 +14,6 @@ const Page = () => {
   const { bioguideId } = useParams(); // Extract bioguideId from the URL
   const [memberInfo, setMemberInfo] = useState<MemberInfo>();
   const [openSecretsCID, setOpenSecretsCID] = useState("");
-  const [candSummary, setCandSummary] = useState<SummaryAttributes>();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
@@ -47,27 +47,6 @@ const Page = () => {
       getCid();
     }
   }, [memberInfo]);
-
-  //get data from open secrets
-  useEffect(() => {
-    console.log("CID: ", openSecretsCID);
-    const fetchCandidateSummary = async () => {
-      try {
-        let response = await fetch(
-          `/api/opensecrets/candidates/${openSecretsCID}`
-        );
-        let data: CandSummaryObject = await response.json();
-        console.log(
-          "Open secrets summary: ",
-          data.response.summary["@attributes"]
-        );
-        setCandSummary(data.response.summary["@attributes"]);
-      } catch (error) {
-        console.error("Error fetching current members: ", error);
-      }
-    };
-    if (openSecretsCID) fetchCandidateSummary();
-  }, [openSecretsCID]);
 
   return (
     <>
@@ -108,23 +87,18 @@ const Page = () => {
                     </Card>
                   </div>
                 </div>
-                <div className="col-span-4">
-                  <Card className="col-span-4 py-2">
-                    {/* <CardHeader>
+                <div className="col-span-4 ">
+                  <FinancialSummary openSecretsCID={openSecretsCID} />
+                  <div className="py-2">
+                    <Card className="col-span-4 py-2">
+                      {/* <CardHeader>
                         <CardTitle>Bills</CardTitle>
                       </CardHeader> */}
-                    <CardContent className="pl-2">
-                      <FinancialSummary />
-                    </CardContent>
-                  </Card>
-                  <Card className="col-span-4 py-2">
-                    {/* <CardHeader>
-                        <CardTitle>Bills</CardTitle>
-                      </CardHeader> */}
-                    <CardContent className="pl-2">
-                      <ContributionsTab openSecretsCID={openSecretsCID} />
-                    </CardContent>
-                  </Card>
+                      <CardContent className="pl-2">
+                        <ContributionsTab openSecretsCID={openSecretsCID} />
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
               </div>
             </div>

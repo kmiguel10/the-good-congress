@@ -1,10 +1,8 @@
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React, { useEffect, useState } from "react";
-import BillsTable from "./bills-table/page";
 import { getIndustriesContributors, getOrgsContributors } from "@/lib/utils";
-import OrgsTable from "./orgs-contributors-table.tsx/page";
+import React, { useEffect, useState } from "react";
 import IndustriesTable from "./industry-contributors-table.tsx/page";
+import OrgsTable from "./orgs-contributors-table.tsx/page";
 
 interface Props {
   openSecretsCID: string;

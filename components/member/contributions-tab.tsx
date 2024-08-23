@@ -3,6 +3,7 @@ import { getIndustriesContributors, getOrgsContributors } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import IndustriesTable from "./industry-contributors-table.tsx/page";
 import OrgsTable from "./orgs-contributors-table.tsx/page";
+import NoticeTooltip from "./notice-tooltip";
 
 interface Props {
   openSecretsCID: string;
@@ -65,9 +66,13 @@ const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
       </TabsList>
       <TabsContent value="organizations" className="space-y-4">
         <div>
-          <div className="text-md font-semibold p-2">
-            Top Contributors by Organization
+          <div className="flex items-center">
+            <div className="text-md font-semibold p-2">
+              Top Contributors by Organization
+            </div>
+            <NoticeTooltip notice={notice} />
           </div>
+
           <div className="flex justify-start px-2">
             <div className="w-3/4 bg-yellow-300 rounded-md py-1">
               <p className="text-xs font-light px-2 ">

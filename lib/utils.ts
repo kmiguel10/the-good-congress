@@ -165,3 +165,13 @@ export function getIndustriesContributors(
 
   return _inds;
 }
+
+// In @/lib/utils.js or utils.ts
+export const formatDollar = (value: number) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+};

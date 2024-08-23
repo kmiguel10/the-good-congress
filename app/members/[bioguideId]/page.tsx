@@ -2,7 +2,6 @@
 
 import BillsTab from "@/components/member/bills-tab";
 import ContributionsTab from "@/components/member/contributions-tab";
-import { Component } from "@/components/member/demo";
 import FinancialSummary from "@/components/member/financial-summary";
 import ProfileCard from "@/components/member/profile-card";
 import { Card, CardContent } from "@/components/ui/card";

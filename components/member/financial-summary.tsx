@@ -1,6 +1,5 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -8,7 +7,6 @@ import {
   LabelList,
   Rectangle,
   XAxis,
-  YAxis,
 } from "recharts";
 
 import {
@@ -26,13 +24,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
-
-// const chartData = [
-//   { name: "cash_on_hand", amount: "22", fill: "var(--color-cash_on_hand)" },
-//   { name: "debt", amount: 200, fill: "var(--color-debt)" },
-//   { name: "spent", amount: 187, fill: "var(--color-spent)" },
-//   { name: "total", amount: 187, fill: "var(--color-total)" },
-// ];
+import { formatDollar } from "@/lib/utils";
 
 const chartConfig = {
   amount: {
@@ -75,6 +67,7 @@ interface ChartData {
   name: string;
   amount: number;
   fill: string;
+  formattedAmount: string;
 }
 
 export default function FinancialSummary({ openSecretsCID }: Props) {
@@ -104,28 +97,25 @@ export default function FinancialSummary({ openSecretsCID }: Props) {
 
   useEffect(() => {
     if (candSummary) {
-      console.log("cashOnHand", candSummary);
       const _chartData: ChartData[] = [
         {
           name: "cash_on_hand",
           amount: parseInt(candSummary.cash_on_hand),
           fill: "var(--color-cash_on_hand)",
+          formattedAmount: formatDollar(parseInt(candSummary.cash_on_hand)),
         },
         {
           name: "debt",
           amount: parseInt(candSummary.debt),
           fill: "var(--color-debt)",
+          formattedAmount: formatDollar(parseInt(candSummary.debt)),
         },
         {
           name: "spent",
           amount: parseInt(candSummary.spent),
           fill: "var(--color-spent)",
+          formattedAmount: formatDollar(parseInt(candSummary.spent)),
         },
-        // {
-        //   name: "total",
-        //   amount: candSummary.total,
-        //   fill: "var(--color-total)",
-        // },
       ];
       setChartData(_chartData);
     }
@@ -151,8 +141,29 @@ export default function FinancialSummary({ openSecretsCID }: Props) {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={({ active, payload, label }) => {
+                if (active && payload && payload.length) {
+                  return (
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        padding: "5px",
+                        border: "1px solid #ccc",
+                      }}
+                    >
+                      <p>{`${label} : ${formatDollar(
+                        Number(payload[0].value)
+                      )}`}</p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
             />
+            {/* <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            /> */}
             <Bar
               dataKey="amount"
               strokeWidth={2}
@@ -170,10 +181,12 @@ export default function FinancialSummary({ openSecretsCID }: Props) {
               }}
             >
               <LabelList
+                dataKey="amount"
                 position="top"
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
+                formatter={(value: number) => formatDollar(value)}
               />
             </Bar>
           </BarChart>

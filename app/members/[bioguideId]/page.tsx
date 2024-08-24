@@ -69,17 +69,16 @@ const Page = () => {
                         <CardTitle>Bills</CardTitle>
                       </CardHeader> */}
                       <CardContent className="pl-2">
-                        {memberInfo?.sponsoredLegislation &&
-                          memberInfo?.cosponsoredLegislation && (
-                            <BillsTab
-                              sponsoredLegislations={
-                                memberInfo?.sponsoredLegislation
-                              }
-                              cosponsoredLegislations={
-                                memberInfo?.cosponsoredLegislation
-                              }
-                            />
-                          )}
+                        {memberInfo && (
+                          <BillsTab
+                            sponsoredLegislations={
+                              memberInfo?.sponsoredLegislation
+                            }
+                            cosponsoredLegislations={
+                              memberInfo?.cosponsoredLegislation
+                            }
+                          />
+                        )}
                       </CardContent>
                     </Card>
                   </div>

@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
 import { formatDollar } from "@/lib/utils";
+import { useCandidateSummary } from "@/app/hooks/useCandidateSummary";
+import { FinancialSummarySkeleton } from "../global/financial-summary-skeleton";
 
 const chartConfig = {
   amount: {
@@ -54,9 +56,6 @@ const chartConfig = {
     label: "Mobile",
     color: "hsl(var(--chart-2))",
   },
-  //   label: {
-  //     color: "hsl(var(--background))",
-  //   },
 } satisfies ChartConfig;
 
 interface Props {
@@ -71,29 +70,9 @@ interface ChartData {
 }
 
 export default function FinancialSummary({ openSecretsCID }: Props) {
-  const [candSummary, setCandSummary] = useState<SummaryAttributes>();
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
-  // Fetch data from open secrets
-  useEffect(() => {
-    console.log("CID: ", openSecretsCID);
-    const fetchCandidateSummary = async () => {
-      try {
-        let response = await fetch(
-          `/api/opensecrets/candidates/${openSecretsCID}`
-        );
-        let data: CandSummaryObject = await response.json();
-        console.log(
-          "Open secrets summary: ",
-          data.response.summary["@attributes"]
-        );
-        setCandSummary(data.response.summary["@attributes"]);
-      } catch (error) {
-        console.error("Error fetching current members: ", error);
-      }
-    };
-    if (openSecretsCID) fetchCandidateSummary();
-  }, [openSecretsCID]);
+  const { candSummary, isLoading } = useCandidateSummary(openSecretsCID);
 
   useEffect(() => {
     if (candSummary) {
@@ -120,6 +99,10 @@ export default function FinancialSummary({ openSecretsCID }: Props) {
       setChartData(_chartData);
     }
   }, [candSummary]);
+
+  if (isLoading) {
+    return <FinancialSummarySkeleton />;
+  }
   return (
     <Card>
       <CardHeader>
@@ -163,10 +146,7 @@ export default function FinancialSummary({ openSecretsCID }: Props) {
                 return null;
               }}
             />
-            {/* <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            /> */}
+
             <Bar
               dataKey="amount"
               strokeWidth={2}

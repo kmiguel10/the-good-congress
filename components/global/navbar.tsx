@@ -4,9 +4,11 @@ import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function Navbar() {
   const currentPath = usePathname();
+  const logoSrc = "/logo.png";
 
   const links = [
     { label: "Congress", href: "/" },
@@ -14,7 +16,9 @@ export default function Navbar() {
   ];
   return (
     <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center bg-muted/40">
-      <Link href="/">Congress Icon </Link>
+      <Link href="/">
+        <Image src={logoSrc} alt="Logo" width={60} height={60} />
+      </Link>
       <ul className="flex space-x-6">
         {links.map((link) => (
           <Link

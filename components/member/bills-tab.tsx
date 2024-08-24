@@ -5,58 +5,26 @@ import React, { useEffect, useState } from "react";
 import BillsTable from "./bills-table/page";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useSponsoredBills } from "@/app/hooks/useSponsoredBills";
+import { TableSkeleton } from "../global/table-skeleton";
+import { useCosponsoredBills } from "@/app/hooks/useCosponsoredBills";
 
 interface Props {
-  sponsoredLegislations: SponsoredLegislation | null;
-  cosponsoredLegislations: CosponsoredLegislation | null;
+  sponsoredLegislations?: SponsoredLegislation;
+  cosponsoredLegislations?: CosponsoredLegislation;
 }
 
 const BillsTab: React.FC<Props> = ({
   sponsoredLegislations,
   cosponsoredLegislations,
 }) => {
-  const [sponsoredBills, setSponsoredBills] = useState<BillDataType[]>();
-  const [coSponsoredBills, setCosponsoredBills] = useState<BillDataType[]>();
+  const apiKey = process.env.NEXT_PUBLIC_OPEN_CONGRESS_GOV_API_KEY || "";
 
-  const apiKey = process.env.NEXT_PUBLIC_OPEN_CONGRESS_GOV_API_KEY;
+  const { sponsoredBills, isLoading: isLoadingSponsoredBills } =
+    useSponsoredBills(sponsoredLegislations, apiKey);
+  const { coSponsoredBills, isLoading: isLoadingCosponsoredBills } =
+    useCosponsoredBills(cosponsoredLegislations, apiKey);
 
-  useEffect(() => {
-    const fetchSponsoredBills = async () => {
-      try {
-        const response = await fetch(
-          `${sponsoredLegislations?.url}?api_key=${apiKey}&limit=200&format=json`
-        );
-        const data: LegislationsResponse = await response.json();
-
-        if (data) {
-          let tableData = getBills(data.sponsoredLegislation);
-          setSponsoredBills(tableData);
-        }
-      } catch (error) {
-        console.error("Error fetching sponsored legislations: ", error);
-      }
-    };
-    if (sponsoredLegislations) fetchSponsoredBills();
-  }, [sponsoredLegislations]);
-
-  useEffect(() => {
-    const fetchCosponsoredLegislations = async () => {
-      try {
-        const response = await fetch(
-          `${cosponsoredLegislations?.url}?api_key=${apiKey}&limit=500`
-        );
-        const data: ColegislationsResponse = await response.json();
-
-        if (data) {
-          let tableData = getBills(data.cosponsoredLegislation);
-          setCosponsoredBills(tableData);
-        }
-      } catch (error) {
-        console.error("Error fetching cosponsored bills: ", error);
-      }
-    };
-    if (cosponsoredLegislations) fetchCosponsoredLegislations();
-  }, [cosponsoredLegislations]);
   return (
     <Tabs defaultValue="sponsored" className="space-y-4">
       <TabsList>
@@ -69,11 +37,13 @@ const BillsTab: React.FC<Props> = ({
             Bills: {sponsoredLegislations?.count}
           </div>
         </div>
-        {sponsoredBills && (
-          <ScrollArea className="h-96 w-auto rounded-md border-0">
-            <BillsTable bills={sponsoredBills} />
-          </ScrollArea>
-        )}
+
+        <ScrollArea className="h-96 w-auto rounded-md border-0">
+          <BillsTable
+            bills={sponsoredBills}
+            isLoading={isLoadingSponsoredBills}
+          />
+        </ScrollArea>
       </TabsContent>
       <TabsContent value="cosponsored" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -82,7 +52,10 @@ const BillsTab: React.FC<Props> = ({
           </div>
         </div>
         <ScrollArea className="h-96 w-auto rounded-md border">
-          {coSponsoredBills && <BillsTable bills={coSponsoredBills} />}
+          <BillsTable
+            bills={coSponsoredBills}
+            isLoading={isLoadingCosponsoredBills}
+          />
         </ScrollArea>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 "></div>

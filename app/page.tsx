@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const [currentCongress, setCurrentCongress] = useState("");
-  const [members, setMembers] = useState<Member[]>();
 
   //Fetch the current congress i.e. 118th congress
   useEffect(() => {
@@ -25,34 +24,11 @@ export default function Home() {
     fetchCurrentCongress();
   }, []);
 
-  //Fetch the current members of this congress
-  useEffect(() => {
-    const fetchCurrentMembers = async () => {
-      try {
-        const response = await fetch(
-          `/api/opengov/member/congress/${currentCongress}`
-        );
-        const data: Member[] = await response.json();
-
-        setMembers(data);
-      } catch (error) {
-        console.error("Error fetching current members: ", error);
-      }
-    };
-
-    if (currentCongress) {
-      fetchCurrentMembers();
-    }
-  }, [currentCongress]);
-
-  //use useMemo to cache membersData
-  const cachedMembers = useMemo(() => members, [members]);
-
   return (
     <div className="container relative">
       <section className="md:block">
-        <div className="overflow-hidden rounded-lg border bg-background shadow space-y-4">
-          <CongressDashboard members={cachedMembers} />
+        <div className="overflow-hidden rounded-lg  bg-background  space-y-4">
+          <CongressDashboard currentCongress={currentCongress} />
         </div>
       </section>
     </div>

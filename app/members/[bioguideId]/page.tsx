@@ -1,83 +1,55 @@
 "use client";
 
+import { useCIDFromOpenSecrets } from "@/app/hooks/useCIDFromOpenSecrets";
+import { useMemberInfo } from "@/app/hooks/useMemberInfo";
+import { FinancialSummarySkeleton } from "@/components/global/financial-summary-skeleton";
 import BillsTab from "@/components/member/bills-tab";
 import ContributionsTab from "@/components/member/contributions-tab";
 import FinancialSummary from "@/components/member/financial-summary";
 import ProfileCard from "@/components/member/profile-card";
 import { Card, CardContent } from "@/components/ui/card";
-import { geCIDFromOpenSecrets } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { bioguideId } = useParams(); // Extract bioguideId from the URL
-  const [memberInfo, setMemberInfo] = useState<MemberInfo>();
-  const [openSecretsCID, setOpenSecretsCID] = useState("");
-
-  useEffect(() => {
-    const fetchMemberInfo = async () => {
-      try {
-        const response = await fetch(`/api/opengov/member/${bioguideId}`);
-        const data: MemberInfoRoot = await response.json();
-
-        console.log("Member summary: ", data);
-        setMemberInfo(data.member);
-      } catch (error) {
-        console.error("Error fetching current members: ", error);
-      }
-    };
-    if (bioguideId) {
-      fetchMemberInfo();
-    }
-  }, [bioguideId]);
-
-  //get cid from open secrets
-  useEffect(() => {
-    if (memberInfo) {
-      const getCid = async () => {
-        try {
-          let cid = await geCIDFromOpenSecrets(memberInfo);
-          if (cid) {
-            setOpenSecretsCID(cid);
-          }
-        } catch (error) {
-          console.log("Error: ", error);
-        }
-      };
-      getCid();
-    }
-  }, [memberInfo]);
-
+  const { isLoading: isLoadingMemberInfo, memberInfo } = useMemberInfo(
+    bioguideId.toString()
+  );
+  const { isLoading: isLoadingOpenSecretsId, openSecretsCID } =
+    useCIDFromOpenSecrets(memberInfo);
+  const router = useRouter();
   return (
     <>
-      <div>Legislators Dashboard: {}</div>
       <div className="container relative">
         <section className="md:block">
-          <div className="overflow-hidden rounded-lg border bg-background shadow space-y-4">
-            <div className="flex-1 space-y-4 p-8 pt-6">
+          <div className="overflow-hidden rounded-lg bg-background space-y-1">
+            <div className="flex-1 space-y-2 p-2 pt-2">
+              <Button variant={"secondary"} onClick={() => router.push("/")}>
+                Home
+              </Button>
+            </div>
+            <div className="flex-1 space-y-2 p-2 pt-2">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
                 <div className="col-span-4">
                   <div className="col-span-2 pb-2">
-                    <ProfileCard memberInfo={memberInfo} />
+                    <ProfileCard memberInfo={memberInfo} isLoading={false} />
                   </div>
 
                   <div>
                     <Card className="col-span-4 py-2">
-                      {/* <CardHeader>
-                        <CardTitle>Bills</CardTitle>
-                      </CardHeader> */}
                       <CardContent className="pl-2">
-                        {memberInfo?.sponsoredLegislation &&
-                          memberInfo?.cosponsoredLegislation && (
-                            <BillsTab
-                              sponsoredLegislations={
-                                memberInfo?.sponsoredLegislation
-                              }
-                              cosponsoredLegislations={
-                                memberInfo?.cosponsoredLegislation
-                              }
-                            />
-                          )}
+                        {
+                          <BillsTab
+                            sponsoredLegislations={
+                              memberInfo?.sponsoredLegislation
+                            }
+                            cosponsoredLegislations={
+                              memberInfo?.cosponsoredLegislation
+                            }
+                          />
+                        }
                       </CardContent>
                     </Card>
                   </div>
@@ -86,9 +58,6 @@ const Page = () => {
                   <FinancialSummary openSecretsCID={openSecretsCID} />
                   <div className="py-2">
                     <Card className="col-span-4 py-2">
-                      {/* <CardHeader>
-                        <CardTitle>Bills</CardTitle>
-                      </CardHeader> */}
                       <CardContent className="pl-2">
                         <ContributionsTab openSecretsCID={openSecretsCID} />
                       </CardContent>

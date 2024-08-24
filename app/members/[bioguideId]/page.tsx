@@ -2,6 +2,7 @@
 
 import { useCIDFromOpenSecrets } from "@/app/hooks/useCIDFromOpenSecrets";
 import { useMemberInfo } from "@/app/hooks/useMemberInfo";
+import { FinancialSummarySkeleton } from "@/components/global/financial-summary-skeleton";
 import BillsTab from "@/components/member/bills-tab";
 import ContributionsTab from "@/components/member/contributions-tab";
 import FinancialSummary from "@/components/member/financial-summary";

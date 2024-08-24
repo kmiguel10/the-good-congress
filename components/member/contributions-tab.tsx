@@ -74,7 +74,7 @@ const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
           </div>
 
           <div className="flex justify-start px-2">
-            <div className="w-3/4 bg-yellow-300 rounded-md py-1">
+            <div className="w-3/4 bg-yellow-200 rounded-md py-1">
               <p className="text-xs font-light px-2 ">
                 * 6-year numbers for senators/Senate candidates
               </p>
@@ -87,15 +87,12 @@ const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
         {orgsData && <OrgsTable organizations={orgsData} />}
       </TabsContent>
       <TabsContent value="industries" className="space-y-4">
-        {/* <ScrollArea className="h-96 w-auto rounded-md border"></ScrollArea>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"></div>
-        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-8 "></div> */}
         <div className="">
           <div className="text-md font-semibold p-2">
             Top Contributors by Industry
           </div>
           <div className="flex justify-start px-2">
-            <div className="w-3/4 bg-yellow-300 rounded-md py-1">
+            <div className="w-3/4 bg-yellow-200 rounded-md py-1">
               <p className="text-xs font-light px-2 ">
                 * 6-year numbers for senators/Senate candidates
               </p>

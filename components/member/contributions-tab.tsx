@@ -6,6 +6,7 @@ import OrgsTable from "./orgs-contributors-table.tsx/page";
 import NoticeTooltip from "./notice-tooltip";
 import { useOrgsContributions } from "@/app/hooks/useOrgsContribution";
 import { useIndustryContributions } from "@/app/hooks/useIndustryContributions";
+import { ContributionsTableSkeleton } from "../global/contributions-table-skeleton";
 
 interface Props {
   openSecretsCID: string;
@@ -20,6 +21,10 @@ const ContributionsTab: React.FC<Props> = ({ openSecretsCID }) => {
 
   const { isLoading: isIndsLoading, indsData } =
     useIndustryContributions(openSecretsCID);
+
+  if (isIndsLoading || isOrgsLoading) {
+    return <ContributionsTableSkeleton />;
+  }
 
   return (
     <Tabs defaultValue="organizations" className="space-y-4">

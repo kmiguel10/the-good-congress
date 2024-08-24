@@ -9,6 +9,8 @@ import FinancialSummary from "@/components/member/financial-summary";
 import ProfileCard from "@/components/member/profile-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { bioguideId } = useParams(); // Extract bioguideId from the URL
@@ -17,16 +19,18 @@ const Page = () => {
   );
   const { isLoading: isLoadingOpenSecretsId, openSecretsCID } =
     useCIDFromOpenSecrets(memberInfo);
-
+  const router = useRouter();
   return (
     <>
       <div className="container relative">
         <section className="md:block">
-          <div className="overflow-hidden rounded-lg border bg-background shadow space-y-4">
-            <div>
-              <button>Back</button>
+          <div className="overflow-hidden rounded-lg bg-background space-y-1">
+            <div className="flex-1 space-y-2 p-2 pt-2">
+              <Button variant={"secondary"} onClick={() => router.push("/")}>
+                Home
+              </Button>
             </div>
-            <div className="flex-1 space-y-4 p-8 pt-6">
+            <div className="flex-1 space-y-2 p-2 pt-2">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
                 <div className="col-span-4">
                   <div className="col-span-2 pb-2">

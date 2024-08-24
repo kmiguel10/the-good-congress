@@ -35,7 +35,7 @@ const Page = () => {
                   <div>
                     <Card className="col-span-4 py-2">
                       <CardContent className="pl-2">
-                        {memberInfo && (
+                        {
                           <BillsTab
                             sponsoredLegislations={
                               memberInfo?.sponsoredLegislation
@@ -44,7 +44,7 @@ const Page = () => {
                               memberInfo?.cosponsoredLegislation
                             }
                           />
-                        )}
+                        }
                       </CardContent>
                     </Card>
                   </div>

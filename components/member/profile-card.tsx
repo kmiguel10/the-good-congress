@@ -50,7 +50,9 @@ const MemberInfo: React.FC<{
       <Badge variant={partyVariant}>{party}</Badge>
     </div>
     <div className="text-sm font-light">{chamber}</div>
-    <div className="text-sm font-light">{`${state} ${district}`}</div>
+    <div className="text-sm font-light">{`${state} ${
+      district ? district : ""
+    }`}</div>
   </div>
 );
 

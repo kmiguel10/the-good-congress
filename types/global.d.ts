@@ -356,7 +356,7 @@ interface BillDataType {
   amendmentNumber: string;
   title: string;
   introducedDate: Date;
-  latestAction: string;
+  latestAction?: string;
 }
 
 //Organization Table Data Type

@@ -24,7 +24,7 @@ const BillsTab: React.FC<Props> = ({
     const fetchSponsoredBills = async () => {
       try {
         const response = await fetch(
-          `${sponsoredLegislations?.url}?api_key=${apiKey}&limit=500&format=json`
+          `${sponsoredLegislations?.url}?api_key=${apiKey}&limit=200&format=json`
         );
         const data: LegislationsResponse = await response.json();
 

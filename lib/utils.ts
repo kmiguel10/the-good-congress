@@ -68,8 +68,10 @@ function getStateCodeFromMemberInfo(memberInfo: MemberInfo) {
 
 //Returns the current member's CID
 function getMemberCID(memberName: string, memberList: Legislator[]) {
-  let member: Legislator[] = memberList.filter(
-    (member) => member["@attributes"].lastname === memberName
+  let member: Legislator[] = memberList.filter((member) =>
+    memberName
+      .toLowerCase()
+      .includes(member["@attributes"].lastname.toLowerCase())
   );
 
   let cid = member[0]["@attributes"].cid;
@@ -92,7 +94,7 @@ export function getBills(bills: SponsoredLegislationDataType[] | undefined) {
       amendmentNumber: "amendmentNumber" in bill ? bill.amendmentNumber : "", // Default to empty string if not present
       title: "title" in bill ? bill.title : "", // Default to empty string if not present
       introducedDate: new Date(bill.introducedDate),
-      latestAction: bill.latestAction.text,
+      latestAction: bill.latestAction ? bill.latestAction.text : "",
     };
     _bills.push(_bill);
   });

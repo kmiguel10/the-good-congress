@@ -1,36 +1,21 @@
 "use client";
 
 import { useCIDFromOpenSecrets } from "@/app/hooks/useCIDFromOpenSecrets";
+import { useMemberInfo } from "@/app/hooks/useMemberInfo";
 import BillsTab from "@/components/member/bills-tab";
 import ContributionsTab from "@/components/member/contributions-tab";
 import FinancialSummary from "@/components/member/financial-summary";
 import ProfileCard from "@/components/member/profile-card";
 import { Card, CardContent } from "@/components/ui/card";
-import { geCIDFromOpenSecrets } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const Page = () => {
   const { bioguideId } = useParams(); // Extract bioguideId from the URL
-  const [memberInfo, setMemberInfo] = useState<MemberInfo>();
-  const { isLoading, openSecretsCID } = useCIDFromOpenSecrets(memberInfo);
-
-  useEffect(() => {
-    const fetchMemberInfo = async () => {
-      try {
-        const response = await fetch(`/api/opengov/member/${bioguideId}`);
-        const data: MemberInfoRoot = await response.json();
-
-        console.log("Member summary: ", data);
-        setMemberInfo(data.member);
-      } catch (error) {
-        console.error("Error fetching current members: ", error);
-      }
-    };
-    if (bioguideId) {
-      fetchMemberInfo();
-    }
-  }, [bioguideId]);
+  const { isLoading: isLoadingMemberInfo, memberInfo } = useMemberInfo(
+    bioguideId.toString()
+  );
+  const { isLoading: isLoadingOpenSecretsId, openSecretsCID } =
+    useCIDFromOpenSecrets(memberInfo);
 
   return (
     <>

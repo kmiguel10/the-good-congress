@@ -30,6 +30,16 @@ export const CongressDashboard: React.FC<Props> = ({ currentCongress }) => {
             )}
           </CardContent>
         </Card>
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Top Contributions</CardTitle>
+          </CardHeader>
+          <CardContent className="flex items-center justify-center h-full">
+            <h4 className="scroll-m-20 text-md font-semibold tracking-tight text-center">
+              Coming soon...
+            </h4>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

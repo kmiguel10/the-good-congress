@@ -18,7 +18,6 @@ export const useCongressMembers = (currentCongress: string) => {
         const data: Member[] = await response.json();
 
         const filteredMembers = getCongressTableMembers(data);
-        console.log("Filtered members: ", filteredMembers);
         setCongressTableData(filteredMembers);
 
         setIsLoading(false);

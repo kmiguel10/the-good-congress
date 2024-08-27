@@ -12,7 +12,7 @@ export default function BillsTable({ bills, isLoading }: Props) {
     return <TableSkeleton />;
   }
   return (
-    <div className="container mx-auto py-2">
+    <div className="container px-2 py-2">
       <DataTable columns={columns} data={bills} />
     </div>
   );

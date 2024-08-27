@@ -14,7 +14,7 @@ export const CongressDashboard: React.FC<Props> = ({ currentCongress }) => {
     useCongressMembers(currentCongress);
 
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
+    <div className="flex-1 space-y-4 p-2 pt-6">
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
       </div>
@@ -23,7 +23,7 @@ export const CongressDashboard: React.FC<Props> = ({ currentCongress }) => {
           <CardHeader>
             <CardTitle>Members</CardTitle>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent className="px-2">
             {isLoading && <TableSkeleton />}
             {!isLoading && isDataReady && congressTableData && (
               <CongressTable members={congressTableData} />
@@ -35,7 +35,7 @@ export const CongressDashboard: React.FC<Props> = ({ currentCongress }) => {
             <CardTitle>Top Contributions</CardTitle>
           </CardHeader>
           <CardContent className="flex items-center justify-center h-full">
-            <h4 className="scroll-m-20 text-md font-semibold tracking-tight text-center">
+            <h4 className="scroll-m-20 text-md font-semibold tracking-tight text-center h-full">
               Coming soon...
             </h4>
           </CardContent>

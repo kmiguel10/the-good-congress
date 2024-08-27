@@ -36,10 +36,9 @@ const Page = () => {
                   <div className="col-span-2 pb-2">
                     <ProfileCard memberInfo={memberInfo} isLoading={false} />
                   </div>
-
                   <div>
                     <Card className="col-span-4 py-2">
-                      <CardContent className="pl-2">
+                      <CardContent className="py-2">
                         {
                           <BillsTab
                             sponsoredLegislations={

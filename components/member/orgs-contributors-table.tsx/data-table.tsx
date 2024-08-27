@@ -38,8 +38,13 @@ export function DataTable<TData, TValue>({
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
+                const isHiddenOnMobile =
+                  header.id === "indiv" || header.id === "pacs";
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead
+                    key={header.id}
+                    className={isHiddenOnMobile ? "hidden md:table-cell" : ""}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -59,11 +64,21 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+                {row.getVisibleCells().map((cell) => {
+                  const isHiddenOnMobile =
+                    cell.column.id === "indiv" || cell.column.id === "pacs";
+                  return (
+                    <TableCell
+                      key={cell.id}
+                      className={isHiddenOnMobile ? "hidden md:table-cell" : ""}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))
           ) : (

@@ -111,7 +111,7 @@ const ProfileCard: React.FC<Props> = ({ memberInfo, isLoading }) => {
   return (
     <Card>
       <CardContent className="pl-4">
-        <div className="flex items-center justify-evenly py-4">
+        <div className="md:flex items-center justify-evenly py-4">
           <MemberImage imageUrl={memberInfo.depiction.imageUrl} />
           <MemberInfo
             name={memberInfo.directOrderName}

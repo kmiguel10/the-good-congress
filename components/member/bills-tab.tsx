@@ -51,7 +51,7 @@ const BillsTab: React.FC<Props> = ({
             Bills: {cosponsoredLegislations?.count}
           </div>
         </div>
-        <ScrollArea className="h-96 w-auto rounded-md border">
+        <ScrollArea className="h-96 w-auto rounded-md ">
           <BillsTable
             bills={coSponsoredBills}
             isLoading={isLoadingCosponsoredBills}

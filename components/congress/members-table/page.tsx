@@ -7,7 +7,7 @@ interface Props {
 
 export default function CongressTable({ members }: Props) {
   return (
-    <div className="container mx-auto py-10">
+    <div className="container px-2 py-10">
       <DataTable columns={columns} data={members} />
     </div>
   );

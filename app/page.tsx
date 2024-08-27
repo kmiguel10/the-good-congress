@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div className="container relative">
       <section className="md:block">
-        <div className="overflow-hidden rounded-lg  bg-background  space-y-4">
+        <div className="overflow-hidden rounded-lg bg-background  space-y-4">
           <CongressDashboard currentCongress={currentCongress} />
         </div>
       </section>

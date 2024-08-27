@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-
 import {
   ColumnDef,
   flexRender,
@@ -11,7 +10,6 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -49,7 +47,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 w-1/2">
         <Input
           placeholder="Search member..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -66,8 +64,15 @@ export function DataTable<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
+                  const isHiddenOnMobile =
+                    header.id === "chamber" ||
+                    header.id === "state" ||
+                    header.id === "district";
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={isHiddenOnMobile ? "hidden md:table-cell" : ""}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -87,14 +92,25 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const isHiddenOnMobile =
+                      cell.column.id === "chamber" ||
+                      cell.column.id === "state" ||
+                      cell.column.id === "district";
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          isHiddenOnMobile ? "hidden md:table-cell" : ""
+                        }
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             ) : (
@@ -110,7 +126,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center lg:justify-end md:justify-start space-x-2 py-4">
         <Button
           variant="outline"
           size="sm"

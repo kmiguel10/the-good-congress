@@ -23,7 +23,7 @@ export const CongressDashboard: React.FC<Props> = ({ currentCongress }) => {
           <CardHeader>
             <CardTitle>Members</CardTitle>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent className="px-2">
             {isLoading && <TableSkeleton />}
             {!isLoading && isDataReady && congressTableData && (
               <CongressTable members={congressTableData} />

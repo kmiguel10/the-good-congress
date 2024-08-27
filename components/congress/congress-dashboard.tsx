@@ -35,7 +35,7 @@ export const CongressDashboard: React.FC<Props> = ({ currentCongress }) => {
             <CardTitle>Top Contributions</CardTitle>
           </CardHeader>
           <CardContent className="flex items-center justify-center h-full">
-            <h4 className="scroll-m-20 text-md font-semibold tracking-tight text-center">
+            <h4 className="scroll-m-20 text-md font-semibold tracking-tight text-center h-full">
               Coming soon...
             </h4>
           </CardContent>
